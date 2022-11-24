@@ -1,68 +1,75 @@
 window.addEventListener("DOMContentLoaded", function(event){
     
     let sections=document.querySelectorAll("body > main > section");
-    let section1=document.getElementById("red");
-    let section2=document.getElementById("orange");
-    let section3=document.getElementById("jaune");
-    let section4=document.getElementById("green");
-    let section5=document.getElementById("blue");
-    let section6=document.getElementById("purple");
-    let position = sections.getBoundingClientRect().top;
+    let currentScrollPosition = document.documentElement.scrollTop;
+    let sectionToGo=currentScrollPosition+NextSection;
     
-    console.log(position)
-    
-for (let i=0;i<sections.length; i++)
-{
-        sections[i].addEventListener("wheel", function (){
-       
-    function getNextSection()
+    function NextSection(current)
     {
-        if(sections.id==="red")
+        if(current.id==="red")
         {
             return document.getElementById("orange")
         }
-        if(sections.id==="orange")
+        else if(current.id==="orange")
         {
             return document.getElementById("yellow")
         }
-        if(sections.id==="yellow")
+        else if(current.id==="yellow")
         {
             return document.getElementById("green")
         }
-        if(sections.id==="green")
+        else if(current.id==="green")
         {
             return document.getElementById("blue")
         }
-        if(sections.id==="blue")
+        else if(current.id==="blue")
         {
             return document.getElementById("purple")
         }
     }
     
-    function getPrevSection()
+    function PrevSection(current)
     {
-        if(sections.id==="orange")
+        if(current.id==="orange")
         {
             return document.getElementById("red")
         }
-        if(sections.id==="yellow")
+        else if(current.id==="yellow")
         {
             return document.getElementById("orange")
         }
-        if(sections.id==="green")
+        else if(current.id==="green")
         {
             return document.getElementById("yellow")
         }
-        if(sections.id==="blue")
+        else if(current.id==="blue")
         {
             return document.getElementById("green")
         }
-        if(sections.id==="purple")
+        else if(current.id==="purple")
         {
             return document.getElementById("blue")
         }
     }
-        });
-}
     
-});
+    
+    
+    for (let i = 0; i < sections.length; i++){
+    sections[i].addEventListener("wheel", function(event){
+    
+    
+        if(event.deltaY > 0 )
+        {
+            scroll(0, sectionToGo)
+        }
+        
+        else if(event.deltaY < 0)
+        {
+            scroll(0, PrevSection)
+        }
+        else {
+           return 0;
+        }
+    }
+    )};
+})
